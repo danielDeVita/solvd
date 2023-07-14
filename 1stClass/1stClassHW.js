@@ -1,3 +1,17 @@
+//lookup table to convert strings into numbers
+const digitValues = {
+  "0": 0,
+  "1": 1,
+  "2": 2,
+  "3": 3,
+  "4": 4,
+  "5": 5,
+  "6": 6,
+  "7": 7,
+  "8": 8,
+  "9": 9,
+};
+
 String.prototype.plus = function (otherNumber) {
   //actual string
   const num1 = this;
@@ -7,20 +21,6 @@ String.prototype.plus = function (otherNumber) {
 
   //here we find which string has more characters (to properly use a for loop while adding, and not miss any number)
   const maxLength = num1.length > num2.length ? num1.length : num2.length;
-
-  //lookup table to convert strings into numbers
-  const digitValues = {
-    "0": 0,
-    "1": 1,
-    "2": 2,
-    "3": 3,
-    "4": 4,
-    "5": 5,
-    "6": 6,
-    "7": 7,
-    "8": 8,
-    "9": 9,
-  };
 
   let sum = "";
   let carry = 0;
@@ -62,20 +62,6 @@ String.prototype.minus = function (otherNumber) {
   //here we find which string has more characters (to properly use a for loop while adding, and not miss any number)
   const maxLength = num1.length > num2.length ? num1.length : num2.length;
 
-  //lookup table to convert strings into numbers
-  const digitValues = {
-    "0": 0,
-    "1": 1,
-    "2": 2,
-    "3": 3,
-    "4": 4,
-    "5": 5,
-    "6": 6,
-    "7": 7,
-    "8": 8,
-    "9": 9,
-  };
-
   let diff = "";
   let borrow = 0;
 
@@ -110,19 +96,6 @@ String.prototype.minus = function (otherNumber) {
 String.prototype.multiply = function (otherNumber) {
   const num1 = this;
   const num2 = otherNumber;
-
-  const digitValues = {
-    "0": 0,
-    "1": 1,
-    "2": 2,
-    "3": 3,
-    "4": 4,
-    "5": 5,
-    "6": 6,
-    "7": 7,
-    "8": 8,
-    "9": 9,
-  };
 
   const maxLength = num1.length + num2.length;
   const product = Array(maxLength).fill(0);
@@ -161,24 +134,13 @@ String.prototype.divide = function (divisor) {
   const dividend = this;
   const quotient = [];
 
-  const digitValues = {
-    "0": 0,
-    "1": 1,
-    "2": 2,
-    "3": 3,
-    "4": 4,
-    "5": 5,
-    "6": 6,
-    "7": 7,
-    "8": 8,
-    "9": 9,
-  };
-
   let dividendValue = "";
 
   for (let i = 0; i < dividend.length; i++) {
     const currentDigit =
-      i < dividend.length ? digitValues[dividend[dividend.length - 1]] : 0;
+      /* i < dividend.length ? digitValues[dividend[dividend.length - 1]] : 0; */
+      //we access the current digit of the dividend, not the last one like in the commented line above
+      i < dividend.length ? digitValues[dividend[i]] : 0;
 
     dividendValue += currentDigit;
 
@@ -210,4 +172,4 @@ String.prototype.divide = function (divisor) {
 console.log("addition is:", "1".plus("1"));
 console.log("subtraction is:", "2".minus("1"));
 console.log("multiplication is:", "0".multiply("2"));
-console.log("division is:", "4".divide("2"));
+console.log("division is:", "466".divide("2"));
