@@ -308,8 +308,8 @@ function toPrimitive(input, prefferedType) {
   };
 
   const toNumber = () => {
-    if (input.valueOf()) return input.valueOf();
-    if (isPrimitive(input.toString())) return input.toString();
+    if (isPrimitive(input.valueOf())) return Number(input.valueOf());
+    if (isPrimitive(input.toString())) return Number(input.toString());
     throw new TypeError();
   };
 
@@ -323,4 +323,4 @@ function toPrimitive(input, prefferedType) {
   }
 }
 
-console.log(toPrimitive("2", "number"));
+console.log(toPrimitive(3, "number"));
