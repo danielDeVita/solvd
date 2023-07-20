@@ -18,7 +18,7 @@ class DataTransformation {
     } else if (typeof a === "boolean" && typeof b === "boolean") {
       return Number(a) + Number(b);
     } else {
-      throw new Error("Addition not possible for the provided types");
+      throw new Error("You can not add those two values");
     }
   }
 
@@ -34,7 +34,7 @@ class DataTransformation {
     if (typeof value === "boolean") {
       return !value;
     } else {
-      throw new Error("The argument is not a boolean");
+      throw new Error("Please provide a boolean argument");
     }
   }
 
@@ -43,7 +43,7 @@ class DataTransformation {
     else if (typeof value === "boolean") return value ? 1 : 0;
     else if (typeof value === "bigint" || typeof value === "number")
       return Number(value);
-    throw new Error("Conversion to number not possible");
+    throw new Error("That value can not be converted to number");
   }
 
   static coerceToType(value, type) {
@@ -65,7 +65,7 @@ class DataTransformation {
       case "array":
         return Array.from(value);
       default:
-        throw new Error("Type coercion not supported");
+        throw new Error("Can not coerce that type");
     }
   }
 }
