@@ -73,7 +73,7 @@ Number.isNull(...) (method to check if a number is Null)
 
 
 *********************
--simple data: 
+-simple data: (acces by value)
 null, string, boolean, number, symbol, bigint
 
 you know how much memory it will take
@@ -86,14 +86,14 @@ you don't know how much memory it will take
 
 *********************
 let a = 1
-let b = 1
+let b = 1 (copy by value)
 b++
 console.log(a) // 1
 console.log(b) // 2
 
 
 let x = [1,2,3]
-let y = x
+let y = x (copy by reference, they point to the same memory place)
 
 y.push(4)
 x.push(5)
@@ -106,8 +106,8 @@ copy the adress)
 
 let a = "hello"
 a[2]="x"
-console.log(a) // "hexllo"
-(because strings are inmutable, they can't change)
+console.log(a) // "hello" (not 'hexllo')
+(because strings are inmutable, they can't change... sometimes)
 
 a.toUpperCase()
 console.log(a) // "HELLO"
@@ -117,7 +117,8 @@ console.log(a) // "HELLO"
 *********************
 TYPE CONVERSION=
 
--explicit: (we are actively converting the data)
+-explicit: (we are actively converting the data) => only works for boolean, string and number
+
 we have special class String where in the constructor could send value like:
 String(nul)=>"null"
 String(undefined)=>"undefined"
@@ -125,10 +126,11 @@ String(true)=>"true"
 String(false)=>"false"
 String(1)=>"1"
 String(NaN)=>"NaN"
-String(new Symbol("abc"))=>"abc"
-String(10000000000*99999)=>9^ (exponent of the number)
+String(Symbol("abc"))=>"Symbol(abc)"
+String(999999*99999999)=>"99999899000001"
+String(99990999999*99999999999)=>"9.999099999800009e+21" (exponent of the number)
 String({})=>"[object Object]"
-String(name:"Anna")=>"[object Object]"
+String({name:"Anna"})=>"[object Object]"
 String([])=>""
 String([1,2,3])=>"1,2,3"
 
@@ -136,7 +138,8 @@ String([1,2,3])=>"1,2,3"
 
 -non-explicit: (we are not actively converting the data)
 example:
-"a"+2 = "a2"
+"a"+2 = "a2" (if one of the operands is string, it will
+convert all to string)
 
 
 *********************
@@ -162,9 +165,11 @@ false => 0
 {} => NaN (empty or not)
 [] => 0
 [1,2,3] => NaN
-symbol => TypeError Exception
+Symbol("a") => TypeError Exception
 NaN => 0 (? sure?)
-"" =>
+"" => 0
+Number("   4   ") => 4
+Number("   4k  ") => NaN
 
 *********************
 STRING CONVERSION TO NUMBER:
@@ -210,7 +215,7 @@ if (isPrimitive(input.valueOf)=>input.valueOf())
 if (isPrimitive(input.toString())=>input.toString())
 throw new Type Error
 
-toPrimitive(): this FN has a switch infise
+toPrimitive(): this FN has a switch inside
 switch(prefered Type){
     case Number:
         return toNumber(input)
@@ -219,6 +224,34 @@ switch(prefered Type){
     default:
         return toNumber(input)    
 }
+
+TO PRIMITIVE FN=
+
+function toPrimitive(input, prefferedType) {
+  const isPrimitive = (value) => value !== Object(value);
+
+  const toString = () => {
+    if (isPrimitive(input.toString())) return input.toString();
+    if (isPrimitive(input.valueOf())) return input.valueOf();
+    throw new TypeError();
+  };
+
+  const toNumber = () => {
+    if (isPrimitive(input.valueOf())) return input.valueOf();
+    if (isPrimitive(input.toString())) return input.toString();
+    throw new TypeError();
+  };
+  switch (prefferedType) {
+    case Number:
+      return toNumber(input);
+    case String:
+      return toString(input);
+    default:
+      return toNumber(input);
+  }
+}
+
+console.log(toPrimitive("2", "number"));
 
 
 examples = (when we compare we always try to convert to NUMBER)
@@ -262,5 +295,32 @@ null == "" => false
 "" + null + 1
 "null" + 1
 
-
 */
+
+/* WORK IN PROGRESS */
+function toPrimitive(input, prefferedType) {
+  const isPrimitive = (value) => value !== Object(value);
+
+  const toString = () => {
+    if (isPrimitive(input.toString())) return input.toString();
+    if (isPrimitive(input.valueOf())) return input.valueOf();
+    throw new TypeError();
+  };
+
+  const toNumber = () => {
+    if (input.valueOf()) return input.valueOf();
+    if (isPrimitive(input.toString())) return input.toString();
+    throw new TypeError();
+  };
+
+  switch (prefferedType) {
+    case "number":
+      return toNumber(input);
+    case "string":
+      return toString(input);
+    default:
+      return toNumber(input);
+  }
+}
+
+console.log(toPrimitive("2", "number"));
