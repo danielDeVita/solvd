@@ -237,21 +237,22 @@ function toPrimitive(input, prefferedType) {
   };
 
   const toNumber = () => {
-    if (isPrimitive(input.valueOf())) return input.valueOf();
-    if (isPrimitive(input.toString())) return input.toString();
+    if (isPrimitive(input.valueOf())) return Number(input.valueOf());
+    if (isPrimitive(input.toString())) return Number(input.toString());
     throw new TypeError();
   };
+
   switch (prefferedType) {
-    case Number:
+    case "number":
       return toNumber(input);
-    case String:
+    case "string":
       return toString(input);
     default:
       return toNumber(input);
   }
 }
 
-console.log(toPrimitive("2", "number"));
+console.log(toPrimitive(3, "number"));
 
 
 examples = (when we compare we always try to convert to NUMBER)
@@ -296,31 +297,3 @@ null == "" => false
 "null" + 1
 
 */
-
-/* WORK IN PROGRESS */
-function toPrimitive(input, prefferedType) {
-  const isPrimitive = (value) => value !== Object(value);
-
-  const toString = () => {
-    if (isPrimitive(input.toString())) return input.toString();
-    if (isPrimitive(input.valueOf())) return input.valueOf();
-    throw new TypeError();
-  };
-
-  const toNumber = () => {
-    if (isPrimitive(input.valueOf())) return Number(input.valueOf());
-    if (isPrimitive(input.toString())) return Number(input.toString());
-    throw new TypeError();
-  };
-
-  switch (prefferedType) {
-    case "number":
-      return toNumber(input);
-    case "string":
-      return toString(input);
-    default:
-      return toNumber(input);
-  }
-}
-
-console.log(toPrimitive(3, "number"));
