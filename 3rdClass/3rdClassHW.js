@@ -73,6 +73,7 @@ const convertToNumber = (value) => {
   else if (typeof value === "boolean") return value ? 1 : 0;
   else if (typeof value === "bigint" || typeof value === "number")
     return Number(value);
+  else if (typeof value === "object" && value === null) return Number(value);
   throw new Error("That value can not be converted to number");
 };
 
@@ -94,7 +95,7 @@ const coerceToType = (value, type) => {
     case "string":
       return stringifyValue(value);
     case "number":
-      return Number(value);
+      return convertToNumber(value);
     case "boolean":
       return Boolean(value);
     case "bigint":
@@ -120,8 +121,8 @@ const coerceToType = (value, type) => {
 // console.log(coerceToType("42", "number")); //  42
 // console.log(coerceToType(true, "number")); //  1
 // console.log(coerceToType(null, "number")); //  0
-// console.log(coerceToType([], "number")); //  0
-// console.log(coerceToType({}, "number")); //  NaN
+// console.log(coerceToType([], "number")); //  That value can not be converted to number
+// console.log(coerceToType({}, "number")); //  That value can not be converted to number
 
 /* coerce boolean */
 // console.log(coerceToType("true", "boolean")); //  true
