@@ -92,7 +92,7 @@ const coerceToType = (value, type) => {
   if (typeof type !== "string") throw new Error("Invalid type");
   switch (type) {
     case "string":
-      return String(value);
+      return stringifyValue(value);
     case "number":
       return Number(value);
     case "boolean":
