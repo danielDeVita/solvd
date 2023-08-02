@@ -184,7 +184,35 @@ function createImmutableObject(object) {
 // console.log(newObj)
 
 //TASK 5a, b 
-function observeObject(obj, cb) { }
+function observeObject(obj, callback) {
+    //PROXY class creates a "copy" of the object
+    return new Proxy(obj, {
+        //target is the original object, receiver is the proxy object
+        get(target, property, receiver) {
+            //when accesing a property the callback is invoked
+            //"property" is passed from the getter function
+            callback(property, "get");
+            return target[property];
+        },
+        //target is the original object, receiver is the proxy object
+        set(target, property, value, receiver) {
+            //when updating a property the callback is invoked
+            //"property" is passed from the getter function
+            callback(property, "set");
+            //setting object property with new value
+            target[property] = value;
+            return true;
+        },
+    });
+}
+const callBackForObserveObject = (objProperty, action) =>
+    console.log(`objProperty name: "${objProperty}", action: "${action}"`);
+//we create a copy of "person"
+const proxyPerdonObj = observeObject(person, callBackForObserveObject);
+//we trigger the callback inside the getter
+console.log("age", proxyPerdonObj.age); //output: objProperty name: "age", action: "get" AND 30 (from the return statement inside getter)
+//we trigger the callback inside the setter
+proxyPerdonObj.age = 9999; //output: objProperty name: "age", action: "set"
 
 //TASK 6
 function deepCloneObject(obj) {
