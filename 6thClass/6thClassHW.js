@@ -319,6 +319,6 @@ const person3 = {
     email: "emailemail",
 };
 
-console.log(validateObject(person1, personSchema)); //true
-console.log(validateObject(person2, personSchema)); //false
-console.log(validateObject(person3, personSchema)); //false
+// console.log(validateObject(person1, personSchema)); //true
+// console.log(validateObject(person2, personSchema)); //false
+// console.log(validateObject(person3, personSchema)); //false
