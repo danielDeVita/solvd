@@ -211,9 +211,9 @@ const callBackForObserveObject = (objProperty, action) =>
 //we create a copy of "person"
 const proxyPerdonObj = observeObject(person, callBackForObserveObject);
 //we trigger the callback inside the getter
-console.log("age", proxyPerdonObj.age); //output: objProperty name: "age", action: "get" AND 30 (from the return statement inside getter)
-//we trigger the callback inside the setter
-proxyPerdonObj.age = 9999; //output: objProperty name: "age", action: "set"
+// console.log("age", proxyPerdonObj.age); //output: objProperty name: "age", action: "get" AND 30 (from the return statement inside getter)
+// //we trigger the callback inside the setter
+// proxyPerdonObj.age = 9999; //output: objProperty name: "age", action: "set"
 
 //TASK 6
 function deepCloneObject(obj) {
@@ -245,4 +245,80 @@ const obj = {
 // console.log("objClone", objClone)
 
 //TASK 7
+//NOT SURE IF I UNDERSTOOD THE ASSIGNMENT
+function validateObject(obj, schema) {
+    //input validation
+    if (typeof obj !== "object" || typeof schema !== "object" || obj === null || schema === null) return false;
 
+    let isValid = true; // Initialize isValid to true
+
+    for (const property in schema) {
+        //checks if property of schema exists
+        if (!property in obj) {
+            isValid = false;
+            //stops loop if property is missing
+            break;
+        }
+
+        //checks for property types in object that don't match the ones in schema
+        if (typeof obj[property] !== schema[property]) {
+            isValid = false;
+            //stops loop if property type doesn't match
+            break;
+        }
+
+        switch (property) {
+            case "firstName":
+            case "lastName":
+                isValid = typeof obj[property] === "string" && obj[property].trim().length > 0;
+                break;
+
+            case "age":
+                isValid = typeof obj[property] === "number" && obj[property] > 0;
+                break;
+
+            case "email":
+                isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(obj[property]);
+                break;
+
+            default:
+                isValid = false;
+                break;
+        }
+        //if at any moment isValid === false, we stop the loop
+        if (!isValid) break;
+    }
+    return isValid;
+}
+
+const personSchema = {
+    firstName: "string",
+    lastName: "string",
+    age: "number",
+    email: "string",
+};
+
+const person1 = {
+    firstName: "testFirstName",
+    lastName: "testLastName",
+    age: 40,
+    email: "email@email.com",
+};
+
+const person2 = {
+    firstName: "",
+    lastName: "testLastName",
+    age: 40,
+    email: "mail@test.com",
+};
+
+const person3 = {
+    firstName: "firstNameTest",
+    lastName: "lastNameTest",
+    age: -999,
+    email: "emailemail",
+};
+
+console.log(validateObject(person1, personSchema)); //true
+console.log(validateObject(person2, personSchema)); //false
+console.log(validateObject(person3, personSchema)); //false
