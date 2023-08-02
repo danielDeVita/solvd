@@ -184,6 +184,7 @@ function createImmutableObject(object) {
 // console.log(newObj)
 
 //TASK 5a, b 
+//NOT FULLY WORKING THE WAY I INTEND, I AM STUCK
 function observeObject(obj, callback) {
     //PROXY class creates a "copy" of the object
     return new Proxy(obj, {
@@ -244,4 +245,61 @@ const obj = {
 // console.log("objClone", objClone)
 
 //TASK 7
-function validateObject(object, validationSchema) { }
+function validateObject(obj, schema) {
+    if (typeof obj !== "object" || typeof schema !== "object" || obj === null || schema === null) return false;
+
+
+    for (const property in schema) {
+        if (!(property in obj)) return false;
+
+
+        const expectedType = schema[property];
+        const actualValue = obj[property];
+
+        // Check if the property's type matches the expected type
+        if (typeof actualValue !== expectedType)  return false;
+        
+
+        // Additional validation rules based on property name
+        if (property === "age") {
+            // Check if age is a positive number
+            if (typeof actualValue !== "number" || actualValue <= 0) {
+                return false;
+            }
+        } else if (property === "email") {
+            // Check if email is a valid email format using a simple regex pattern
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(actualValue)) {
+                return false;
+            }
+        }
+    }
+
+    // All checks passed, the object is valid according to the schema
+    return true;
+}
+
+// Example usage:
+const personSchema = {
+    firstName: "string",
+    lastName: "string",
+    age: "number",
+    email: "string",
+};
+
+const person1 = {
+    firstName: "John",
+    lastName: "Doe",
+    age: 30,
+    email: "john.doe@example.com",
+};
+
+const person2 = {
+    firstName: "Jane",
+    lastName: "Doe",
+    age: -25, // age is negative, so it should fail validation
+    email: "invalidemail", // invalid email format, so it should fail validation
+};
+
+console.log(validateObject(person1, personSchema)); // Output: true
+console.log(validateObject(person2, personSchema)); // Output: false
