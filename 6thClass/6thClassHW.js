@@ -4,25 +4,25 @@ const person = {}
 Object.defineProperties(person, {
     firstName: {
         value: "John",
-        writable: true, //I THOUGHT IF THIS WAS NON-WRITABLE, THIS HAD TO BE FALSE
+        writable: false,
         enumerable: true, //it won't console.log without this property
         configurable: true //so we can modify attribute properties in the future
     },
     lastName: {
         value: "Doe",
-        writable: true, //I THOUGHT IF THIS WAS NON-WRITABLE, THIS HAD TO BE FALSE
+        writable: false,
         enumerable: true, //it won't console.log without this property
         configurable: true //so we can modify attribute properties in the future
     },
     age: {
         value: 30,
-        writable: true, //I THOUGHT IF THIS WAS NON-WRITABLE, THIS HAD TO BE FALSE
+        writable: false,
         enumerable: true, //it won't console.log without this property
         configurable: true //so we can modify attribute properties in the future
     },
     email: {
         value: "john.doe@example.com",
-        writable: true, //I THOUGHT IF THIS WAS NON-WRITABLE, THIS HAD TO BE FALSE
+        writable: false,
         enumerable: true, //it won't console.log without this property
         configurable: true //so we can modify attribute properties in the future
     }
@@ -37,21 +37,21 @@ Object.defineProperty(person, "updateInfo", {
             //we get every properties [[descriptor]] from person obj
             const propertyDescriptor = Object.getOwnPropertyDescriptor(person, key);
 
+            if (propertyDescriptor.writable === true) {
+                //we define new property in original person obj, using new [key] from newObj obj
+                Object.defineProperty(person, key, {
+                    value: newObj[key],
+                    writable: false,
+                    enumerable: true,
+                    configurable: true
+                })
+            } else throw new Error("Writable is set to false, must be set to true to modify property")
             //we modify writable to true to change data
-            propertyDescriptor.writable = true
-
-            //we define new property in original person obj, using new [key] from newObj obj
-            Object.defineProperty(person, key, {
-                value: newObj[key],
-                writable: true,
-                enumerable: true,
-                configurable: true
-            });
-
+            /* propertyDescriptor.writable = true */
         });
         return person;
     },
-    writable: true,
+    writable: false,
     enumerable: true,
     configurable: true
 });
@@ -60,7 +60,7 @@ Object.defineProperty(person, "updateInfo", {
 // console.log("original person descriptors:", Object.getOwnPropertyDescriptors(person))
 // person.updateInfo({ firstName: "Jane", age: 32 });
 // console.log("updated person:", person);
-// console.log("updated person descriptors:", Object.getOwnPropertyDescriptors(person)) 
+// console.log("updated person descriptors:", Object.getOwnPropertyDescriptors(person))
 
 //TASK 1c
 Object.defineProperty(person, "address", {
