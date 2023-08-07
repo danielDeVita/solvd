@@ -72,4 +72,27 @@ const getArrayUnion = (arr1, arr2) => {
 }
 // console.log((getArrayUnion([1, 2, 3, 4], [3, 4, 5, 6])));
 
-const measureArrayPerformance = (fn, arr) => { }
+/* const measureArrayPerformance = (fn, arr) => { } */
+
+function measureArrayPerformance(func, array) {
+    const startTime = performance.now();
+    func(array);
+    const endTime = performance.now();
+    const executionTime = endTime - startTime;
+    return executionTime;
+  }
+  
+  // Example usage:
+  function sumArray(array) {
+    let sum = 0;
+    for (let i = 0; i < array.length; i++) {
+      sum += array[i];
+    }
+    return sum;
+  }
+  
+  const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  
+  const executionTime = measureArrayPerformance(sumArray, testArray);
+  console.log(`Execution time: ${executionTime} milliseconds`);
+  
