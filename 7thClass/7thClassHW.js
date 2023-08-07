@@ -72,5 +72,37 @@ const getArrayUnion = (arr1, arr2) => {
 }
 // console.log((getArrayUnion([1, 2, 3, 4], [3, 4, 5, 6])));
 
-/* const measureArrayPerformance = (fn, arr) => { } */
+const measureArrayPerformance = (fn, arr) => {
+    const starts = performance.now();
+    fn(arr);
+    const finish = performance.now();
+    return finish - starts;
+}
 
+const testArray = [1, 2, 3, 4, 5];
+
+//CUSTOM MAP VS STANDARD MAP
+const customMap = (fn, arr) => {
+    if (typeof fn !== "function" || !fn) throw new Error("pass a fn as first parameter")
+    if (!Array.isArray(arr || !arr)) throw new Error("pass an array as second parameter")
+    let mappedArray = []
+    for (let i = 0; i < arr.length; i++) {
+        mappedArray.push(fn(arr[i]))
+    }
+    return mappedArray
+}
+// console.log("execution time of custom map:", measureArrayPerformance(() => customMap(n => n * n, testArray), testArray), "ms");
+// console.log("execution time of standard map:", measureArrayPerformance(() => testArray.map(n => n * n), testArray), "ms");
+
+//CUSTOM FILTER VS STANDARD FILTER
+const customFilter = (fn, arr) => {
+    if (typeof fn !== "function" || !fn) throw new Error("pass a fn as first parameter")
+    if (!Array.isArray(arr || !arr)) throw new Error("pass an array as second parameter")
+    let filteredArray = []
+    for (let i = 0; i < arr.length; i++) {
+        if (fn(arr[i])) filteredArray.push(arr[i]);
+    }
+    return filteredArray
+}
+// console.log("execution time of custom filter:", measureArrayPerformance(() => customFilter(n => n % 2 === 0, testArray), testArray), "ms");
+// console.log("execution time of standard filter:", measureArrayPerformance(() => testArray.filter(n => n % 2 === 0), testArray), "ms");
