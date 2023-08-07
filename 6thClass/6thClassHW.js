@@ -4,25 +4,25 @@ const person = {}
 Object.defineProperties(person, {
     firstName: {
         value: "John",
-        writable: false,
+        writable: true, //I THOUGHT IF THIS WAS NON-WRITABLE, THIS HAD TO BE FALSE
         enumerable: true, //it won't console.log without this property
         configurable: true //so we can modify attribute properties in the future
     },
     lastName: {
         value: "Doe",
-        writable: false,
+        writable: true, //I THOUGHT IF THIS WAS NON-WRITABLE, THIS HAD TO BE FALSE
         enumerable: true, //it won't console.log without this property
         configurable: true //so we can modify attribute properties in the future
     },
     age: {
         value: 30,
-        writable: false,
+        writable: true, //I THOUGHT IF THIS WAS NON-WRITABLE, THIS HAD TO BE FALSE
         enumerable: true, //it won't console.log without this property
         configurable: true //so we can modify attribute properties in the future
     },
     email: {
         value: "john.doe@example.com",
-        writable: false,
+        writable: true, //I THOUGHT IF THIS WAS NON-WRITABLE, THIS HAD TO BE FALSE
         enumerable: true, //it won't console.log without this property
         configurable: true //so we can modify attribute properties in the future
     }
@@ -43,7 +43,7 @@ Object.defineProperty(person, "updateInfo", {
             //we define new property in original person obj, using new [key] from newObj obj
             Object.defineProperty(person, key, {
                 value: newObj[key],
-                writable: false,
+                writable: true,
                 enumerable: true,
                 configurable: true
             });
@@ -51,7 +51,7 @@ Object.defineProperty(person, "updateInfo", {
         });
         return person;
     },
-    writable: false,
+    writable: true,
     enumerable: true,
     configurable: true
 });
@@ -250,11 +250,11 @@ function validateObject(obj, schema) {
     //input validation
     if (typeof obj !== "object" || typeof schema !== "object" || obj === null || schema === null) return false;
 
-    let isValid = true; // Initialize isValid to true
+    let isValid = true; // Initialize isValid variable with TRUE value
 
     for (const property in schema) {
         //checks if property of schema exists
-        if (!property in obj) {
+        if (!(property in obj)) {
             isValid = false;
             //stops loop if property is missing
             break;
