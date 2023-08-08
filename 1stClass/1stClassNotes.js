@@ -9,6 +9,14 @@ Parent element is the max value always
 left child = 2 * index + 1
 right child = 2 * index + 2
 
+                20
+                /\
+             15    11
+            / \    /
+           6   9  7
+
+[20,15,11,6,9,7]
+
 ###### 
 Call Stack =
 It's a data structure, the rule is FIRST IN & LAST  OUT (FILO)
