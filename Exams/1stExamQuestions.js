@@ -30,17 +30,123 @@ major.minor.patch = (x.y.z)
                     y = new feature. keep deprecated FN, backwards compatible
                     z = minor patches, like refactoring
 
+4. How do you use modules in JavaScript? How can you write your own module? Provide an overview of the module system in Node.js.
+
+CLASS WAS NOT RECORDED
+
+You install them from npm, yarn or pnpm. Packages are files combined together, consist of parts of code that solves tasks (saves time), one package may use other packages.
+
+5. What are global modules in Node.js, and how do they differ from local modules? How do you interpret version specifications like "1.2.3", "~3.2.0", or "^2.1.0"?
+
+A Node.js package that is installed globally on your system rather than being tied to a specific project
+npm i -g myPckg (how to install them)
+
 "package": "4.17.1", your project will always use version 4.17.1 of "package"
 "package": "~3.2.0", your project will use up to version 3.2.9 of "package", but not higher like 3.3.0 (.y is the limit)
 "package": "^2.1.0", your project will use up to 2.9.9 or project, but not higher like 3.0.0 (.x is the limit)
 
-4. How do you use modules in JavaScript? How can you write your own module? Provide an overview of the module system in Node.js.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Topic: JavaScript Basics
+
+6. What is the difference between regular functions and arrow functions in JavaScript? How are they used, and when should you prefer one over the other?
+
+a) Syntax differences, 
+b) Arrow functions have an implicit return when it is just one line (they also need braces "()" if they return an object)
+c) The scope of key word .this:
+                            in arrow fn it points to an outer context (they inherit their .this context from definition sourranding)
+                            in regular fn it points to the property refered (they have their own context for .this, depending how it is called)
+d) Within an object it is better practice to use regular fn
+e) For short fn that don't require .this or for a callback, arrow fn are better 
+
+7. Explain the difference between `let` and `const` in JavaScript, including their scoping rules and immutability features.
+
+Both of them have block scope, they don't hoist
+let is mutable and can be reassigned new values
+const is not mutable, but its references (object or array) can be reasigned (elements of an array or properties of an object)
+
+8. What are the different data types in JavaScript? Provide examples of each data type.
+
+Primitive Data Types =
+
+-number: (normal integer, hexadecimal, binary, float)
+-string: ("template string" || '' || `literal string`)
+-boolean: (true or false)
+-null: (it means that the pointer of the variable has a link to an unexisting value)
+-undefined: (similar to null, a variable is declared but it has no value asigned to it)
+-symbol: (a unique and immutable data type used as identifier for object properties)
+-bigint: (it goes from (2^53 -1) until (2^53) - 1)
+
+Reference Data Types = 
+
+-object: (this variables are linked to a part in memory, with key:value relation)
+
+9. How does hoisting work in JavaScript, and how can it affect variable declarations and function definitions?
+
+var variables declarations are taken to the 'top' of the code during compilation, not their assingment
+regular functions are also hoisted, before var variables (you can call it before its definition)
+let and const are hoisted too, but not initialized
+
+10. Describe how logical operations work in JavaScript, and name all the object methods available for Boolean objects.
+
+&&:returns true if both statements are true
+||: returns true if at least one statement is true
+!: returns the opposite boolean
+ternary operator: const result = condition ? trueValue : falseValue
+Short-Circuit Evaluation = 
+    &&: if left operand is false, right operand is not evaluated
+    ||: if the left operand is true, the right operand is not evaluated
+
+const booleanObject = new Boolean() => creates boolean object (it recieves boolean or falsy/truthy values)
+      booleanObject.toString() => returns string of boolean value of object
+      booleanObject.valueOf() => returns boolean value of object
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Topic: Objects and Functions
+
+11. How do objects look like in JavaScript, and what are property descriptors associated with object properties?
+
+[key]:value
+
+Property descriptors are 6 attribute every property in an object has:
+1) [[value]] the value of the field itself
+2) [[Get]] for FN getter, it will be undefined if we don't write it
+3) [[Set]] for FN setter, it will be undefined if we don't write it
+4) [[Writable]] by default it is TRUE, it means we can rewrite it
+                if FALSE, the value will be a const and won't be able to be rewriten, we won't get an ERROR if we try to use a GETTER with it
+5) [[Enumerable]] by default it's TRUE, it can be iterated with Object.Keys() and forIn and for loops
+                if FALSE, it won't be show in objectKeys() and for In but it will be shown in getPropertyNames()
+6) [[Configurable]] by default it's TRUE 
+                if FALSE it will become non-deletable
+
+12. What is a deep clone of an object, and how can you proceed to create one in JavaScript?
+
+It's a perfect copy of an original object, diferent reference. We can update them independently.
+Cloning methods =
+    a) const someObject = Object.assing({},otherObject)
+    b) const someObject = {...otherObject}
+    c) const someObject = JSON.parse(JSON.stringify(otherObject))
+    d) libraries like _cloneDeep
+
+13. Explain the CommonJS module system and how it is utilized in Node.js to organize and share code between different files.
+
+CLASS WAS NOT RECORDED
+
+????????
+
+14. How do you create and export a module in Node.js, and how do you import it into another file using `require`?
 
 CLASS WAS NOT RECORDED
 
 const variable = require("modulename")
 const otherVariable = require("path/to/module")
-module.exports = "variableToExport";
+module.exports = {variableToExport, otherVariableToExport}
+exports.someName = someNameVariable
 
 import module, {otherModule} from 'package'
 import myOtherModule from 'path/to/otherFile'
@@ -48,9 +154,115 @@ import {variable, otherVariable} from 'path/to/differentFile'
 export default'module' (one per file)
 export 'otherModule' (several per file)
 
-5. What are global modules in Node.js, and how do they differ from local modules? How do you interpret version specifications like "1.2.3", "~3.2.0", or "^2.1.0"?
+15. Describe the roles of the "require" function in Node.js when dealing with modules, and how does it help manage dependencies?
 
-A Node.js package that is installed globally on your system rather than being tied to a specific project
-npm i -g myPckg (how to install them)
+CLASS WAS NOT RECORDED
+
+require() has many tasks, it loads the module, it resolves the path from node_modules or an absolute path, it uses caching to load it only once, if there is another
+require using that same module it will return a reference to that cached module
+
+16. What is the difference between "exports" and "module.exports" in a Node.js module? How can you use them to expose functionalities?
+
+module.exports = {thingToExport, otherThing}
+exports.thingToExport = thingToExport
+
+if assign a new value to exports, the reference to module.exports will be broken, and the module will no longer export the contents of module.exports
+
+17. What is the difference between "exports" and "require" in a Node.js module? How are they related to each other in the module system?
+
+The require function imports the module.exports object from another module
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Topic: Type Conversion
+
+18. What is type conversion in JavaScript, and why is it necessary? Provide examples of implicit and explicit type conversions.
+
+It's the process of converting a value from one data type to another. It allows us to perform operations on variables of different types and ensures the code works.
+Implicit = happens automaticaly when trying to operate different types of data
+Explicit = we actively convert the data
+
+19. Explain the concept of truthy and falsy values in JavaScript and how they relate to boolean conversions.
+
+In boolean contexts values can be coerced to true or false. We coerced thata with IF statements or WHILE loops.
+    Truthy = 
+        Non-empty strings: "hello", "123"
+        Non-zero numbers: 42, -3.14
+        Objects and arrays: {}, [1, 2, 3]
+        Functions: function() { ... }
+    Falsy = 
+        Empty strings: ""
+        Zero: 0
+        null
+        undefined
+        NaN
+
+
+20. How can you convert a variable of type string to a number in JavaScript using built-in functions like `Number()`, `parseInt()`, and `+` (unary plus)?
+
+We simply pass the string number as a parameter of those functions and they will return the value as a number or we place a + in front of the string number.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Topic: Function Concepts
+
+21. What is an IIFE (Immediately Invoked Function Expression) in JavaScript, and what problem does it solve? Provide an example of its usage.
+
+It's a JavaScript function that is defined and executed immediately after it is created. It creates it's own scope to ensure there is no variables colliding,
+because variables in the global scope can be accessed from everywhere, hence creating unexpected behaviour.
+Very useful for creating modules such as the ones in npm (they avoid conflicts with other modules and our own code)
+
+(function(){
+    //code here...
+    })();
+
+22. How do you define a function in JavaScript? Provide examples of both function declarations and function expressions.
+
+        Function declaration =
+            function doSomething(a) {
+                //do something with a
+            };
+
+        Function expression =
+            var doSomething = function (a){
+                //do something with a
+                };
+
+        Named function expression =
+            const doSomething = function doSomething(){
+                //some code
+            };
+
+        Arrow function =
+            let doSomething = () => //some code;
+
+23. Can a function in JavaScript accept multiple arguments? If yes, how do you pass and handle them within the function?
+
+const arrayExample = [1,2,3,4,5,6]
+Yes it can, they have to be separated by a comma or using the spread operator ...arrayExample
+
+24. Provide an example of a closure in JavaScript and explain how it works.
+
+Closure allows a function to "remember" and access variables from its outer (enclosing) scope even after the outer function has finished executing. 
+Closures are created whenever a function is defined within another function and captures references to its outer variables.
+
+function outerFunction() {
+    const outerVariable = "I am from the outer function";
+    function innerFunction() {
+        console.log(outerVariable);
+    }
+    return innerFunction;
+}
+const closure = outerFunction(); // "closure" captures the innerFunction and its scope
+closure(); // Output: "I am from the outer function"
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 */
+
