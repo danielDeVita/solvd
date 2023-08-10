@@ -264,5 +264,123 @@ closure(); // Output: "I am from the outer function"
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+Topic: Pure Functions and Immutability
+
+25. What is a pure function in JavaScript, and what characteristics define a function as "pure"? How do pure functions relate to immutability in JavaScript?
+
+Pure FN are functions that are idempotent (always same result if same arguments)
+They have no side effects (shouldn't affect other variables or states)
+Since pure FN don't affect other variables they are a key component for inmutability because the value of a variable won't be modified by a pure FN
+
+26. Describe the concept of named immutable methods in JavaScript and provide examples of such methods.
+
+They are methods applied to an array or object, they won't affect original data structure, but return a new one.
+examples = .map(), .filter(), Object.assing({}, otherObject, {newProperties})
+
+27. Provide an example of a Higher-Order Function in JavaScript and explain how it can accept another function as an argument.
+
+Functions which take functions as input/output parameters are called High order functions
+Examples =  map(), filter(), reduce(). etc..
+
+    function doOperation(operation, a, b) {
+        return operation(a, b);
+    };
+    function add(x, y) {
+        return x + y;
+    };
+    function subtract(x, y) {
+        return x - y;
+    };
+    const result1 = doOperation(add, 5, 3);      // Calls add(5, 3)
+    const result2 = doOperation(subtract, 8, 2); // Calls subtract(8, 2)
+
+28. How do you pass arguments to a function in JavaScript, and how can a function return a value?
+
+Within the parentheses, using keyword 'return' (or => if it's an arrow fn with a short statement)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Topic: Function Composition and Array Methods
+
+29. What is currying in JavaScript, and how does it help with function composition? Provide an example of currying.
+
+A function that takes multiple arguments is transformed into a series of functions that each take a single argument.
+Makes code reusable and modular.
+They always have to return another function.
+
+Example =
+    function curriedCalculateTotalWithTax(price) {
+    return function(taxRate) {
+        const taxAmount = price * (taxRate / 100);
+        return price + taxAmount;
+    };
+};
+const calculateTotalForPrice = curriedCalculateTotalWithTax(100); // Price: 100 (it returns a fn that takes a taxRate as parameter)
+const totalWith10PercentTax = calculateTotalForPrice(10); // Tax: 10% (it returns the final value)
+
+30. Provide an example of function composition and describe its advantages over nested function calls.
+
+Combination or chaining multiple operations to perform complex tasks in an efficient way without creating intermediate variables.
+Benefits: modularity and readability.
+    Example =
+    let hello = (name) => `Hello, ${name}`;
+    let toUpperCase = (string) => string.toUpperCase();
+    let greet = (stringName) => hello(toUpperCase(stringName));
+
+31. Describe various array methods such as map, filter, reduce, and forEach, and provide examples of their usage.
+
+.map() => a new array where every element went through its callback
+.filter() => a new array that returns only elements that passed the callback
+.reduce() => a new value that is the accumulation of the callback
+.forEach() => NO new array, only iterates every element through its callback
+
+32. How do you create and initialize objects using object literals and the "new" keyword in JavaScript? How can you access, modify, and delete object properties?
+
+    Object literal = 
+    let obj = {a:1};
+
+    New = 
+    function Obj(parameterProperty) {
+        this.a = parameterProperty;
+        //methods go here this.method = function(){}
+    };
+    const obj = new Obj(1); // {a:1}
+
+    class Obj{
+    constructor(parameterProperty){
+         this.a = parameterProperty;
+        }
+        //methods go outside constructor()
+    };
+    const obj = new Obj(1); // {a:1}
+
+You can acces an object propety through dot notation if you know the name of the property or through brackets.
+You can modify an object like this =
+    object.property = newValue
+    object["property"] newValue
+You can delete a property like this =
+    delete object.property
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Topic: Prototypes and Object-Oriented Programming
+
+33. What is the prototype in JavaScript, and how does it work with objects? Explain the prototype chain.
+34. How do objects, prototypes, and property descriptors tie together to form the foundation of object-oriented programming in JavaScript?
+35. How do you create an object in JavaScript using constructor functions or classes? Provide examples of both approaches.
+36. Explain the attributes in a property descriptor, such as value, writable, enumerable, and configurable.
+37. What are accessor properties, and how can you define them using get and set in property descriptors?
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 */
 

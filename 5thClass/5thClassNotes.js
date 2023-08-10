@@ -187,8 +187,8 @@ const fn = function(){
 
 *********************************
 
-Carrying=
-carrying over information from previous calculations 
+Currying=
+currying over information from previous calculations 
 or computations and using this carryover value instead of 
 starting again
 
