@@ -50,7 +50,7 @@ const keywords = ["JavaScript", "template", "tagged"];
 const template = "Learn JavaScript tagged templates to create custom \${0} literals for \${1} manipulation.";
 
 function highlightKeywords(template, keywords) {
-    // Your code will go here
+   
 }
 
 const highlighted = highlightKeywords(template, keywords);
