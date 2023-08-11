@@ -370,15 +370,66 @@ You can delete a property like this =
 Topic: Prototypes and Object-Oriented Programming
 
 33. What is the prototype in JavaScript, and how does it work with objects? Explain the prototype chain.
+
+JavaScript first looks for a property directly on the object. If it doesn't find the property, it then looks at the object's prototype, and if it's not 
+found there, it continues to look up the prototype chain until the property is found or the chain ends with the built-in Object.prototype.
+
 34. How do objects, prototypes, and property descriptors tie together to form the foundation of object-oriented programming in JavaScript?
+
+Objects can be constructed from prototypes with the keyword 'new', they inherit their methods and properties thanks to the prototype concept,
+every property in an object has 6 property descriptors (value, configurable, enumerable, writable, getter, setter).
+
 35. How do you create an object in JavaScript using constructor functions or classes? Provide examples of both approaches.
+
+    Constructor Function =
+    function Obj(parameterProperty) {
+        this.a = parameterProperty;
+        //methods go here this.method = function(){}
+    };
+    const obj = new Obj(1); // {a:1}
+
+    Classes = 
+    class Obj{
+    constructor(parameterProperty){
+         this.a = parameterProperty;
+        }
+        //methods go outside constructor()
+    };
+    const obj = new Obj(1); // {a:1}
+
 36. Explain the attributes in a property descriptor, such as value, writable, enumerable, and configurable.
+
+Property descriptors are 6 attribute every property in an object has:
+1) [[value]] the value of the field itself
+2) [[Get]] for FN getter, it will be undefined if we don't write it
+3) [[Set]] for FN setter, it will be undefined if we don't write it
+4) [[Writable]] by default it is TRUE, it means we can rewrite it
+                if FALSE, the value will be a const and won't be able to be rewriten, we won't get an ERROR if we try to use a GETTER with it
+5) [[Enumerable]] by default it's TRUE, it can be iterated with Object.Keys() and forIn and for loops
+                if FALSE, it won't be show in objectKeys() and for In but it will be shown in getPropertyNames()
+6) [[Configurable]] by default it's TRUE 
+                if FALSE it will become non-deletable
+
 37. What are accessor properties, and how can you define them using get and set in property descriptors?
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Accesor properties allow us to retrieve and update a value in an object.
+You have to use keyword 'get' and 'set' = 
 
+    const obj = {
+        _value: 0, // Private property
+        get value() {
+            return this._value;
+        },
+        set value(newValue) {
+           this._value = newValue;    
+        }
+    };
+    const value = obj.value //calls the getter
+    obj.value = newValue //calls the getter  (doesn't return anything)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
