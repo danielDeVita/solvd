@@ -431,7 +431,78 @@ You have to use keyword 'get' and 'set' =
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+Topic: Arrays
 
+38. Explain the difference between the splice and slice methods in JavaScript arrays. How are they used, and what are the key distinctions in their behavior? Provide examples to illustrate their usage.
+
+.slice() does not modify original array, .splice() does
+.slice() returns new array with selected elements, .splice() returns new array with removed elements
+.slice() takes two optional arguments: start and end. It extracts elements from the start index up to (but not including) the end index.
+.splice() takes at least two arguments: start and deleteCount, starts at the start index and removes deleteCount elements. You can also provide additional elements to insert at that position.
+
+    const originalArray = [1, 2, 3, 4, 5];
+
+    const newArray = originalArray.slice(1, 4);
+    console.log(newArray); // Output: [2, 3, 4]
+
+    const removedElements = originalArray.splice(1, 2, 6, 7);
+    console.log(removedElements); // Output: [2, 3]
+    console.log(originalArray);   // Output: [1, 6, 7, 4, 5]
+
+39. How can you loop through an array using a for loop, and what are the benefits of using array methods like forEach instead?
+
+    for(initialization; check condition; operation in the end of every cycle ){
+        //code
+    }
+
+    array.forEach(element=>{
+        //code
+});
+
+forEeach is more readable, is less prone to mistakes by developer and has an implicit iteration
+
+40. How do you create a multidimensional array in JavaScript, and how do you access and modify elements in such arrays?
+
+Writing and array as an element of the containing array. We iterate them using a for loo inside a for loop.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Topic: Strings and Template Strings
+
+41. What are strings in JavaScript, and how do you create a string variable? Describe the difference between single quotes (''), double quotes ("") and backticks (``) when defining strings.
+
+Strings are a data type in JavaScript, you create a string adding quotes, double quotes or backtics to a piece of text.
+Single quotes and double quotes work the same, they both need backslash to escape a character
+Backticks have more power, you don't need to escape characters and they allow interpolation of variables and code with %{} syntax
+
+42. What are template strings (or template literals) in JavaScript, and how are they different from regular strings? How do you create a template string, and what benefits do they offer over traditional strings?
+
+They have more power and flexibility, you can add interpolation of variables, expressions, they read blank spaces and you don't have to escape special characters.
+
+43. Describe how you can use String methods like toUpperCase, toLowerCase, trim, split, indexOf, substring, etc., to manipulate and extract information from strings.
+
+you have to apply that method to a string
+.toUpperCase() => new string with all CAPITAL letters
+.toLowerCase() => new string with small letters
+.trim() => new string without blank spaces
+.split() => returns an array of elements separated by the delimitator parameter
+.indexOf() returns the index of the first occurrence of a specified substring in a string
+.lastIndexOf() does the same but searches backward from the end
+.substring() => sames a .slice(start, upToExcluding) for arrays
+.substr(start, amountOfCharacters) => same as .splice() for arrays, modifies original string
+
+44. How can you concatenate strings in JavaScript using traditional methods, and how does it compare to concatenation with template strings? Provide examples of both approaches.
+
+we concatenate using the + operator, 
+using the .concat(everyString, we, wantTo, concatenate) method ,
+with template literals we just type the string, not using a operator or method
+
+45. What is the difference between a tagged template literal and a regular template literal? How can you use tagged template literals to customize string interpolation behavior?
+
+regular tempalte literal involes a string and interpolation of variables and expressions
+tagged tempalte literals involves calling a function that returns a string
 
 */
 
