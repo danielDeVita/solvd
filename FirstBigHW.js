@@ -38,3 +38,23 @@ const localizedIntroduction = localize`${introduction}`;
 // console.log(localizedGreeting); // Ola
 // console.log(localizedIntroduction); // Bem-vindo ao nosso site
 
+
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+
+/* TASK 2 Advanced Tagged Template */
+
+const keywords = ["JavaScript", "template", "tagged"];
+const template = "Learn JavaScript tagged templates to create custom \${0} literals for \${1} manipulation.";
+
+function highlightKeywords(template, keywords) {
+    // Your code will go here
+}
+
+const highlighted = highlightKeywords(template, keywords);
+
+//console.log(highlighted); // Expected: "Learn <span class='highlight'>JavaScript</span> tagged templates to create custom <span class='highlight'>template</span> literals for <span class='highlight'>tagged</span> manipulation."
+console.log(template)
+
