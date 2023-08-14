@@ -463,7 +463,7 @@ forEeach is more readable, is less prone to mistakes by developer and has an imp
 
 40. How do you create a multidimensional array in JavaScript, and how do you access and modify elements in such arrays?
 
-Writing and array as an element of the containing array. We iterate them using a for loo inside a for loop.
+Writing and array as an element of the containing array. We iterate them using a for loop inside a for loop.
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
