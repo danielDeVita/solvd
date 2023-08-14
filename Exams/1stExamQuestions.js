@@ -496,7 +496,7 @@ you have to apply that method to a string
 44. How can you concatenate strings in JavaScript using traditional methods, and how does it compare to concatenation with template strings? Provide examples of both approaches.
 
 we concatenate using the + operator, 
-using the .concat(everyString, we, wantTo, concatenate) method ,
+using the .concat(everyString, we, wantTo, concatenate) method,
 with template literals we just type the string, not using a operator or method
 
 45. What is the difference between a tagged template literal and a regular template literal? How can you use tagged template literals to customize string interpolation behavior?
