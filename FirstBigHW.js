@@ -50,11 +50,67 @@ const keywords = ["JavaScript", "template", "tagged"];
 const template = "Learn JavaScript tagged templates to create custom \${0} literals for \${1} manipulation.";
 
 function highlightKeywords(template, keywords) {
-   
-}
+    let templateArray = template.split(" ");
+    templateArray.forEach((word, index) => {
+        const highlightedKeyword = `<span class='highlight'>${word}</span>`;
+        if (keywords.includes(word)) {
+            templateArray[index] = highlightedKeyword;
+        };
+    });
+    return templateArray.join(" ");
+};
 
 const highlighted = highlightKeywords(template, keywords);
 
-//console.log(highlighted); // Expected: "Learn <span class='highlight'>JavaScript</span> tagged templates to create custom <span class='highlight'>template</span> literals for <span class='highlight'>tagged</span> manipulation."
-console.log(template)
+// console.log(highlighted);
+// Expected: "Learn <span class='highlight'>JavaScript</span> tagged templates to create custom <span class='highlight'>template</span> literals for <span class='highlight'>tagged</span> manipulation."
 
+//BUT I GET: "Learn <span class='highlight'>JavaScript</span> <span class='highlight'>tagged</span> templates to create custom ${0} literals for ${1} manipulation."
+
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+
+/* TASK 3 Multiline Tagged Template */
+
+function multiline(strings, ...values) {
+
+    //create new array at every line jump
+    const arrayOfSentences = strings[0].split(`\n`);
+
+    //accumulator variable (will hold the multiline string)
+    let finalString = ``;
+
+    //number at the begining of the line
+    let counter = 1;
+
+    //each line will be storage here during every iteration
+    let line = ``;
+
+    //iterate array of lines
+    for (sentence of arrayOfSentences) {
+
+        //if a line is an empty string, we set that sentence to "line"
+        if (sentence === ``) line = sentence;
+        //if it's not empty string, we set that sentence to "line" and we concatenate "counter", we also increment the counter
+        else {
+            line = `${counter} ${sentence}`;
+            counter++;
+        };
+        //as long s the counter hasn't reach the last sentence, we add to "finalString" every line of code plus a line jump
+        if (counter < arrayOfSentences.length - 1) finalString = finalString + line + `\n`;
+        //if it reaches the last element of the array, we add every string to "finalString" variable without the line jump
+        else finalString = finalString + line;
+    }
+    return finalString;
+};
+
+const code = multiline`
+function add(a, b) {  
+    return a + b;  
+}
+`;
+
+console.log(code);
