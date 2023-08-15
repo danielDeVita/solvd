@@ -140,7 +140,7 @@ function debouncedSearch(query) {
     console.log("Searching for:", query);
 };
 
-//it holds closure from debounce with debounceSearch as callback and 3000ms as delay
+//it holds closure from debounce with debounceSearch as callback and 2000ms as delay
 const debouncedSearchHandler = debounce(debouncedSearch, 2000);
 
 //capture the input tag with id "search-input"
