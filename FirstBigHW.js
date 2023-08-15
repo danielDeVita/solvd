@@ -62,7 +62,7 @@ function highlightKeywords(template, keywords) {
 
 const highlighted = highlightKeywords(template, keywords);
 
-console.log(highlighted);
+// console.log(highlighted);
 // Expected: "Learn <span class='highlight'>JavaScript</span> tagged templates to create custom <span class='highlight'>template</span> literals for <span class='highlight'>tagged</span> manipulation."
 
 //BUT I GET: "Learn <span class='highlight'>JavaScript</span> <span class='highlight'>tagged</span> templates to create custom ${0} literals for ${1} manipulation."
@@ -114,3 +114,33 @@ function add(a, b) {
 `;
 
 // console.log(code);
+
+/* TASK 4 Implementing Debounce Function */
+
+function debounce(fn, delay) {
+    let timeoutID;
+    return function (...args) {
+        clearTimeout(timeoutID);
+        timeoutID = setTimeout(() => {
+            //we have to bind the context to this function
+            fn.apply(this, args);
+        }, delay);
+    };
+};
+
+//callback that only console-logs the query it gets from the input's event target value
+function debouncedSearch(query) {
+    // Perform search operation with the query  
+    console.log("Searching for:", query);
+};
+
+//it holds closure from debounce with debounceSearch as callback and 3000ms as delay
+const debouncedSearchHandler = debounce(debouncedSearch, 2000);
+
+//capture the input tag with id "search-input"
+const inputElement = document.getElementById("search-input");
+//add event listener on every change in the input selected and we execute debounceSearchHandler with the text typed in the field
+inputElement.addEventListener("input", event => {
+    //we execute this function with the e.target.value as the querye that it passes to debouncedSearch
+    debouncedSearchHandler(event.target.value);
+});
