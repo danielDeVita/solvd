@@ -62,7 +62,7 @@ function highlightKeywords(template, keywords) {
 
 const highlighted = highlightKeywords(template, keywords);
 
-// console.log(highlighted);
+console.log(highlighted);
 // Expected: "Learn <span class='highlight'>JavaScript</span> tagged templates to create custom <span class='highlight'>template</span> literals for <span class='highlight'>tagged</span> manipulation."
 
 //BUT I GET: "Learn <span class='highlight'>JavaScript</span> <span class='highlight'>tagged</span> templates to create custom ${0} literals for ${1} manipulation."
@@ -113,4 +113,4 @@ function add(a, b) {
 }
 `;
 
-console.log(code);
+// console.log(code);

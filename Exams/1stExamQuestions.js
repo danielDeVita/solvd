@@ -199,7 +199,6 @@ In boolean contexts values can be coerced to true or false. We coerced thata wit
         undefined
         NaN
 
-
 20. How can you convert a variable of type string to a number in JavaScript using built-in functions like `Number()`, `parseInt()`, and `+` (unary plus)?
 
 We simply pass the string number as a parameter of those functions and they will return the value as a number or we place a + in front of the string number.
