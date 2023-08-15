@@ -126,7 +126,9 @@ function add(a, b) {
 function debounce(fn, delay) {
     let timeoutID;
     return function (...args) {
-        clearTimeout(timeoutID);
+        if (timeoutID) {
+            clearTimeout(timeoutID);
+        };
         timeoutID = setTimeout(() => {
             //we have to bind the context to this function
             fn.apply(this, args);
