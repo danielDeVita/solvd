@@ -144,3 +144,5 @@ inputElement.addEventListener("input", event => {
     //we execute this function with the e.target.value as the querye that it passes to debouncedSearch
     debouncedSearchHandler(event.target.value);
 });
+
+/* TASK 5  Implementing Throttle Function */
