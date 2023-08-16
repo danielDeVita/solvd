@@ -489,8 +489,8 @@ you have to apply that method to a string
 .split() => returns an array of elements separated by the delimitator parameter
 .indexOf() returns the index of the first occurrence of a specified substring in a string
 .lastIndexOf() does the same but searches backward from the end
-.substring() => sames a .slice(start, upToExcluding) for arrays
-.substr(start, amountOfCharacters) => same as .splice() for arrays, modifies original string
+.substring() => new string (start, upToIncluding) 
+.substr(start, amountOfCharacters) => similar to .splice() for arrays (doesn't modify original string tho, and doesn't take more arguments)
 
 44. How can you concatenate strings in JavaScript using traditional methods, and how does it compare to concatenation with template strings? Provide examples of both approaches.
 
