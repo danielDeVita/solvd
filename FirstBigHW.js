@@ -46,26 +46,30 @@ const localizedIntroduction = localize`${introduction}`;
 
 /* TASK 2 Advanced Tagged Template */
 
+/* 
+//OLD VARIABLES, THEY GOT UPDATED ("template did")
 const keywords = ["JavaScript", "template", "tagged"];
-const template = "Learn JavaScript tagged templates to create custom \${0} literals for \${1} manipulation.";
+const template = "Learn JavaScript tagged templates to create custom \${0} literals for \${1} manipulation."; 
+*/
+
+const keywords = ["JavaScript", "template", "tagged"];
+const template = "Learn \${0} tagged templates to create custom \${1} literals for \${2} manipulation.";
+
 
 function highlightKeywords(template, keywords) {
-    let templateArray = template.split(" ");
-    templateArray.forEach((word, index) => {
-        const highlightedKeyword = `<span class='highlight'>${word}</span>`;
-        if (keywords.includes(word)) {
-            templateArray[index] = highlightedKeyword;
-        };
+    //replace every placeholder ({0}, {1}, {2}, etc...) with 'replaceValue'. 'replaceValue' is not a static word, it is a callback fn that returns the string that will replace the placeholders
+    return template.replace(/\${\d+}/g, replaceValue => {
+        //we search for number/digits in the string, it returns a 1 element array with the matched string, we then convert it to number
+        const index = Number(replaceValue.match(/\d+/)[0]);
+        //we use the index from above to access the selected word to replace the placeholder (it won't work if we change the order in the keywords array)
+        return `<span class='highlight'>${keywords[index]}</span>`;
     });
-    return templateArray.join(" ");
 };
 
 const highlighted = highlightKeywords(template, keywords);
 
 // console.log(highlighted);
 // Expected: "Learn <span class='highlight'>JavaScript</span> tagged templates to create custom <span class='highlight'>template</span> literals for <span class='highlight'>tagged</span> manipulation."
-
-//BUT I GET: "Learn <span class='highlight'>JavaScript</span> <span class='highlight'>tagged</span> templates to create custom ${0} literals for ${1} manipulation."
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -145,13 +149,18 @@ function debouncedSearch(query) {
 //it holds closure from debounce with debounceSearch as callback and 2000ms as delay
 const debouncedSearchHandler = debounce(debouncedSearch, 2000);
 
+/* 
+//UNBLOCK TO TEST
+
 //capture the input tag with id "search-input"
 const inputElement = document.getElementById("search-input");
 //add event listener on every change in the input selected and we execute debounceSearchHandler with the text typed in the field
 inputElement.addEventListener("input", event => {
     //we execute this function with the e.target.value as the querye that it passes to debouncedSearch
     debouncedSearchHandler(event.target.value);
-});
+}); 
+
+*/
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -178,7 +187,12 @@ function onScroll(event) {
 
 const throttledScrollHandler = throttle(onScroll, 2000);
 
-window.addEventListener("scroll", throttledScrollHandler);
+/* 
+//UNBLOCK TO TEST
+
+window.addEventListener("scroll", throttledScrollHandler); 
+
+*/
 
 
 ////////////////////////////////////////////////////////////////////////////
