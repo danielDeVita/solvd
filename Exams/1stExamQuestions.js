@@ -166,7 +166,8 @@ require using that same module it will return a reference to that cached module
 module.exports = {thingToExport, otherThing}
 exports.thingToExport = thingToExport
 
-if assign a new value to exports, the reference to module.exports will be broken, and the module will no longer export the contents of module.exports
+if assign a new value to exports, the reference to module.exports will be broken, and the module will no longer export the contents of module.exports.
+it means that if we do exports. and module.exports we will override module.exports and the require fn will only return the module.exports file/module
 
 17. What is the difference between "exports" and "require" in a Node.js module? How are they related to each other in the module system?
 
@@ -310,14 +311,14 @@ Makes code reusable and modular.
 They always have to return another function.
 
 Example =
-    function curriedCalculateTotalWithTax(price) {
-    return function(taxRate) {
-        const taxAmount = price * (taxRate / 100);
-        return price + taxAmount;
+    function curriedAdd(a) {
+    return function(b) {
+        return a + b;
     };
-};
-const calculateTotalForPrice = curriedCalculateTotalWithTax(100); // Price: 100 (it returns a fn that takes a taxRate as parameter)
-const totalWith10PercentTax = calculateTotalForPrice(10); // Tax: 10% (it returns the final value)
+}
+const add5 = curriedAdd(5); // Creates a new function that adds 5 to a value
+const result1 = add2(3);    // Adds 2 to 3, resulting in 5
+const result2 = add5(3);    // Adds 5 to 3, resulting in 8
 
 30. Provide an example of function composition and describe its advantages over nested function calls.
 
