@@ -1,5 +1,23 @@
-/* QUICK SORT */
+/* TEST ARRAYS */
+const sortedArray2 = [1, 2];
+const sortedBackwardArray2 = [2, 1];
+const randomArray2 = [2, 1];
 
+const sortedArray10 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const sortedBackwardArray10 = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+const randomArray10 = [3, 1, 9, 6, 7, 2, 5, 10, 8, 4];
+
+const sortedArray50 = [...Array(50).keys()];
+const sortedBackwardArray50 = [...Array(50).keys()].reverse();
+const randomArray50 = Array.from({ length: 50 }, () => Math.floor(Math.random() * 100));
+
+const sortedArray200 = [...Array(200).keys()];
+const sortedBackwardArray200 = [...Array(200).keys()].reverse();
+const randomArray200 = Array.from({ length: 200 }, () => Math.floor(Math.random() * 1000));
+
+
+
+/* QUICK SORT */
 const quickSort = array => {
     //break case for recursion
     if (array.length <= 1) return array;
@@ -23,15 +41,9 @@ const quickSort = array => {
     return quickSort(left).concat(pivot).concat(quickSort(right));
 }
 
-// console.log("QUICK SORT")
-// console.log(quickSort([11, 22, 34, 45, 64, 90]));
-// console.log(quickSort([90, 64, 45, 34, 22, 11]));
-// console.log(quickSort([34, 64, 11, 45, 90, 22]));
-
 
 
 /* MERGE SORT */
-
 const mergeHelper = (leftArray, rightArray) => {
     //i for left array
     let leftIndex = 0;
@@ -68,15 +80,9 @@ const mergeSort = array => {
     return mergeHelper(mergeSort(left), mergeSort(right))
 }
 
-// console.log("MERGE SORT");
-// console.log(mergeSort([11, 22, 34, 45, 64, 90]));
-// console.log(mergeSort([90, 64, 45, 34, 22, 11]));
-// console.log(mergeSort([34, 64, 11, 45, 90, 22]));
-
 
 
 /* BUBLE SORT */
-
 const bubleSort = array => {
     for (let i = 0; i < array.length; i++) {
         for (let j = i + 1; j < array.length; j++) {
@@ -90,7 +96,13 @@ const bubleSort = array => {
     return array;
 }
 
-// console.log("BUBLE SORT");
-// console.log(bubleSort([11, 22, 34, 45, 64, 90]));
-// console.log(bubleSort([90, 64, 45, 34, 22, 11]));
-// console.log(bubleSort([34, 64, 11, 45, 90, 22]));
+
+/* PERFORMANCE */
+function howLongItTakes(sortingAlgo, array) {
+    const startTime = performance.now();
+    sortingAlgo(array.slice());
+    const endTime = performance.now();
+    return endTime - startTime;
+}
+
+console.log(howLongItTakes(mergeSort, randomArray200));
