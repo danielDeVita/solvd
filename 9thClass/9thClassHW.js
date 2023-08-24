@@ -99,10 +99,10 @@ const bubleSort = array => {
 
 /* PERFORMANCE */
 function howLongItTakes(sortingAlgo, array) {
-    const startTime = performance.now();
-    sortingAlgo(array.slice());
-    const endTime = performance.now();
-    return endTime - startTime;
+    const start = performance.now();
+    sortingAlgo(array);
+    const end = performance.now();
+    return end - start;
 }
 
-console.log(howLongItTakes(mergeSort, randomArray200));
+console.log(howLongItTakes(mergeSort, randomArray2));
