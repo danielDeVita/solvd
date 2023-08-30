@@ -73,7 +73,21 @@ this two things run everytime before timers, pendingCB, idle, poll, check, etc..
 
 only if it finish every task in timers it will move to pending CB and so on...
 
+*****************************************************************************
 
+BETTER EXPLAINED:
+
+timers: this phase executes callbacks scheduled by setTimeout() and setInterval().
+    setImmediate() is designed to execute a script once the current poll phase completes.
+    setTimeout() schedules a script to be run after a minimum threshold in ms has elapsed.
+pending callbacks: executes I/O callbacks deferred to the next loop iteration.
+idle, prepare: only used internally.
+poll: retrieve new I/O events; execute I/O related callbacks (almost all with the exception of close callbacks, the ones scheduled by timers, and setImmediate()); node will block here when appropriate.
+check: setImmediate() callbacks are invoked here.
+close callbacks: some close callbacks, e.g. socket.on('close', ...).
+Between each run of the event loop, Node.js checks if it is waiting for any asynchronous I/O or timers and shuts down cleanly if there are not any.
+
+*****************************************************************************
 
 EXAMPLE= (https://imgbb.com/gD472nN)
 
