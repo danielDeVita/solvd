@@ -1,45 +1,57 @@
 /* Task 1: Implement promiseAll Function */
 
+//CORRECTIONS: I TOOK OUT THE .FINALLY AND RESOLVE THE MAIN PROMISE WITHIN THE FOR OF LOOP
+
 const promiseAll = arrayOfPromises => {
     //we return a Promise constructor with both callbacks for resolve and reject cases
     return new Promise((resolvedPromise, rejectedPromise) => {
         //in this array we will store the value from each resolved promise
         const values = [];
+        //counter
+        let counter = 0;
         //iterate over arrayOfPromises
         for (const promise of arrayOfPromises) {
             promise
                 //we fulfilled each promise and store the value on the "values" array
                 .then(resolvedValue => {
                     values.push(resolvedValue);
+                    counter++;
+                    //if counter is the same amount of promises, we resolve all promises at the end of the loop
+                    if (counter === arrayOfPromises.length) resolvedPromise(values);
                 })
-                .catch(error => {
-                    //if we face an error we call the reject case callback function and pass the error
-                    rejectedPromise(error);
-                })
-                .finally(() => {
-                    //we solve the Promise we are returning
-                    resolvedPromise(values)
-                })
+                //if we face an error we call the reject case callback function and pass the error
+                .catch(error => rejectedPromise(error));
         }
-    });
-}
-
-const promisesTask1 = [
-    Promise.resolve(1),
-    Promise.resolve(2),
-    Promise.resolve(3)
-];
-
-promiseAll(promisesTask1)
-    .then(results => {
-        console.log("All promises resolved:", results); // Expected: [1, 2, 3]
     })
-    .catch(error => {
-        console.error("At least one promise rejected:", error);
-    });
+};
+
+const delay = (ms, value) => new Promise(res => setTimeout(() => res(value), ms));
+const promises = [
+    delay(3000, 'a'),
+    delay(1000, 'b'),
+    delay(2000, 'c')
+];
+promiseAll(promises).then(results => { console.log(results); });
+
+// const promisesTask1 = [
+//     Promise.resolve(1),
+//     Promise.resolve(2),
+//     Promise.resolve(3)
+// ];
+
+
+// promiseAll(promisesTask1)
+//     .then(results => {
+//         console.log("All promises resolved:", results); // Expected: [1, 2, 3]
+//     })
+//     .catch(error => {
+//         console.error("At least one promise rejected:", error);
+//     });
 
 
 /* Task 2: Implement promiseAllSettled Function */
+
+//CORRECTIONS: I TOOK THE .FINALLY OUTSIDE OF THE FOR OF LOOP
 
 const promiseAllSettled = arrayOfPromises => {
     const results = []
@@ -51,11 +63,9 @@ const promiseAllSettled = arrayOfPromises => {
                     value => { results.push({ status: 'fulfilled', value }) },
                     reason => { results.push({ status: 'rejected', reason }) }
                 )
-                //we resolve main Promise at the end of the loop
-                .finally(() => {
-                    resolvedPromise(results)
-                })
-        };
+        }
+        //we resolve main Promise after the loop
+        resolvedPromise(results)
     });
 }
 
@@ -64,7 +74,6 @@ const promisesTask2 = [
     Promise.reject("Error occurred"),
     Promise.resolve(3)
 ];
-
 promiseAllSettled(promisesTask2)
     .then(results => {
         console.log("All promises settled:", results);
