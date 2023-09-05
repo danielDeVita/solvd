@@ -1,7 +1,7 @@
 /* Task 1: Implement promiseAll Function */
 
 //CORRECTIONS: I TOOK OUT THE .FINALLY AND RESOLVE THE MAIN PROMISE WITHIN THE FOR OF LOOP
-
+//CORRECTIONS 2: I STORE THEM IN ARRAY 'VALUES' IN SAME ORDER AS ORIGINAL ARRAY OF PROMISES
 const promiseAll = arrayOfPromises => {
     //we return a Promise constructor with both callbacks for resolve and reject cases
     return new Promise((resolvedPromise, rejectedPromise) => {
@@ -10,11 +10,12 @@ const promiseAll = arrayOfPromises => {
         //counter
         let counter = 0;
         //iterate over arrayOfPromises
-        for (const promise of arrayOfPromises) {
+        for (const [i, promise] of arrayOfPromises.entries()) {
             promise
                 //we fulfilled each promise and store the value on the "values" array
+                //IN THE SAME ORDER WE GOT THEM, NOT IN ORDER OF COMPLETION!!!! (sorry)
                 .then(resolvedValue => {
-                    values.push(resolvedValue);
+                    values[i] = resolvedValue;
                     counter++;
                     //if counter is the same amount of promises, we resolve all promises at the end of the loop
                     if (counter === arrayOfPromises.length) resolvedPromise(values);
@@ -32,22 +33,6 @@ const promises = [
     delay(2000, 'c')
 ];
 promiseAll(promises).then(results => { console.log(results); });
-
-// const promisesTask1 = [
-//     Promise.resolve(1),
-//     Promise.resolve(2),
-//     Promise.resolve(3)
-// ];
-
-
-// promiseAll(promisesTask1)
-//     .then(results => {
-//         console.log("All promises resolved:", results); // Expected: [1, 2, 3]
-//     })
-//     .catch(error => {
-//         console.error("At least one promise rejected:", error);
-//     });
-
 
 /* Task 2: Implement promiseAllSettled Function */
 
@@ -81,8 +66,7 @@ promiseAllSettled(promisesTask2)
         //            { status: 'rejected', reason: 'Error occurred' },
         //            { status: 'fulfilled', value: 3 }]
     });
-
-
+ 
 /* Task 3: Implement Chaining of Promises as a Separate Function */
 
 const chainPromises = arrayOfFunctions => {
