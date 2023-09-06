@@ -95,7 +95,7 @@ ORDER1 (after adding book2 3 times) \n
 `, order1);
 
 console.log(`**************************************** \n
-        ORDER1 TOTAL PRICE \n
+    ORDER1 TOTAL PRICE WITH 3 BOOKS2 \n
                 $${order1.totalPrice}`);
 
 console.log(`**************************************** \n
@@ -106,3 +106,7 @@ cart1.removeBook(book2)
 console.log(`**************************************** \n
 BOOK 2 AVAILABILITY AFTER REMOVING IT 1 TIME \n
 `, book2.availability);
+
+console.log(`**************************************** \n
+    ORDER1 TOTAL PRICE WITH 2 BOOKS2 \n
+                $${order1.totalPrice}`);
