@@ -2,6 +2,7 @@
 
 //CORRECTIONS: I TOOK OUT THE .FINALLY AND RESOLVE THE MAIN PROMISE WITHIN THE FOR OF LOOP
 //CORRECTIONS 2: I STORE THEM IN ARRAY 'VALUES' IN SAME ORDER AS ORIGINAL ARRAY OF PROMISES
+
 const promiseAll = arrayOfPromises => {
     //we return a Promise constructor with both callbacks for resolve and reject cases
     return new Promise((resolvedPromise, rejectedPromise) => {
@@ -34,39 +35,50 @@ const promises = [
 ];
 promiseAll(promises).then(results => { console.log(results); });
 
+
 /* Task 2: Implement promiseAllSettled Function */
 
 //CORRECTIONS: I TOOK THE .FINALLY OUTSIDE OF THE FOR OF LOOP
+//CORRECTIONS 2: WE USE THE RESOLVE CB IN THE .CATCH TO SETTLE PROMISES IN THE 'RESULTS' ARRAY
 
 const promiseAllSettled = arrayOfPromises => {
     const results = []
+    let counter = 0
     return new Promise((resolvedPromise, _rejectedPromise) => {
-        for (const promise of arrayOfPromises) {
+        for (const [i, promise] of arrayOfPromises.entries()) {
             promise
                 .then(
-                    //we push to 'results' an object depending on its status
-                    value => { results.push({ status: 'fulfilled', value }) },
-                    reason => { results.push({ status: 'rejected', reason }) }
-                )
+                    //we push to 'results' an object
+                    value => {
+                        //we store promises in 'results' in the same order as array
+                        results[i] = { status: 'fulfilled', value }
+                        counter++;
+                        //if counter has same number as amount of promises, we resolve them
+                        if (counter === arrayOfPromises.length) resolvedPromise(results);
+                    })
+                .catch(
+                    reason => {
+                        //we store promises in 'results' in the same order as array
+                        results[i] = { status: 'rejected', reason }
+                        counter++
+                        //if counter has same number as amount of promises, we resolve them
+                        //we use the resolved CB still, not the rejected!!!!
+                        if (counter === arrayOfPromises.length) resolvedPromise(results);
+                    })
         }
-        //we resolve main Promise after the loop
-        resolvedPromise(results)
     });
 }
 
-const promisesTask2 = [
-    Promise.resolve(1),
-    Promise.reject("Error occurred"),
-    Promise.resolve(3)
-];
+const promise1 = new Promise((resolve) => { setTimeout(() => { resolve('Resolved after 100ms'); }, 100); });
+const promise2 = new Promise((_, reject) => { setTimeout(() => { reject('Rejected after 50ms'); }, 50); });
+const promisesTask2 = [promise1, promise2];
+
 promiseAllSettled(promisesTask2)
     .then(results => {
         console.log("All promises settled:", results);
-        // Expected: [{ status: 'fulfilled', value: 1 },
-        //            { status: 'rejected', reason: 'Error occurred' },
-        //            { status: 'fulfilled', value: 3 }]
     });
- 
+
+
 /* Task 3: Implement Chaining of Promises as a Separate Function */
 
 const chainPromises = arrayOfFunctions => {
