@@ -8,6 +8,20 @@ class Book {
     }
 }
 
+class ComputerScienceBook extends Book {
+    constructor(title, author, isbn, price, availability) {
+        super(title, author, isbn, price, availability)
+        this.genre = 'Computer Science'
+    }
+}
+
+class HistoryBook extends Book {
+    constructor(title, author, isbn, price, availability) {
+        super(title, author, isbn, price, availability)
+        this.genre = "History"
+    }
+}
+
 class User {
     constructor(name, email, userId = Math.floor(Math.random() * 100)) {
         this.name = name
@@ -17,8 +31,9 @@ class User {
 }
 
 class Cart {
-    constructor() {
+    constructor(user) {
         this.books = []
+        this.user = user
     }
     addBook(bookToAdd) {
         //we only add books if we have enough stock
@@ -65,22 +80,31 @@ class Order {
 
 //instances of books
 const book1 = new Book('book1', 'author1')
-const book2 = new Book('book2', 'author2')
+const book2 = new Book('book2', 'author2', "ISBN-1234567890")
 const book3 = new Book('book3', 'author3')
+//extending Book
+const cSBook = new ComputerScienceBook('cSBook', 'cSAuthor')
+const hBook = new HistoryBook('hBook', 'hAuthor')
 
 //instances of users
 const user1 = new User('user1', 'email1')
+const user2 = new User('user2', 'email2', 1234567890)
 
 //instances of carts
 const cart1 = new Cart(user1)
+const cart2 = new Cart(user2)
 
 //instance of Order
 const order1 = new Order(user1, cart1)
+const order2 = new Order(user2, cart2)
 
 console.log(`**************************************** \n
         ORIGINAL BOOK2 AVAILABILITY \n
                   ${book2.availability}`);
 
+console.log(`**************************************** \n
+              CART1 (EMPTY) \n
+`, cart1);
 
 console.log(`**************************************** \n
             ORDER1 (EMPTY) \n
@@ -89,6 +113,10 @@ console.log(`**************************************** \n
 cart1.addBook(book2)
 cart1.addBook(book2)
 cart1.addBook(book2)
+
+cart2.addBook(cSBook)
+cart2.addBook(hBook)
+
 
 console.log(`**************************************** \n
 ORDER1 (after adding book2 3 times) \n
@@ -101,6 +129,14 @@ console.log(`**************************************** \n
 console.log(`**************************************** \n
 BOOK2 AVAILABILITY AFTER ADDING IT 3 TIMES \n
 `, book2.availability);
+
+console.log(`**************************************** \n
+ORDER2 (after adding polymorphic Books) \n
+`, order2);
+
+console.log(`**************************************** \n
+ORDER2 TOTAL PRICE WITH 2 POLYMORPHIC BOOKS \n
+                $${order2.totalPrice}`);
 
 cart1.removeBook(book2)
 console.log(`**************************************** \n
