@@ -405,7 +405,7 @@ class BinarySearchTree {
 
 function validBinarySearchTree(node, min = null, max = null) {
     if (!node) return true;
-    if ((min !== null && node <= min) || (max !== null && node >= max))  return false;
+    if ((min !== null && node.value <= min) || (max !== null && node.value >= max)) return false;
     return (
         validBinarySearchTree(node.left, min, node) &&
         validBinarySearchTree(node.right, node, max)
@@ -418,13 +418,14 @@ binarySearchTree.insert(1134); binarySearchTree.insert(665); binarySearchTree.in
 binarySearchTree.insert(271); binarySearchTree.insert(794); binarySearchTree.insert(931);
 binarySearchTree.insert(967); binarySearchTree.insert(371); binarySearchTree.insert(987);
 binarySearchTree.insert(530); binarySearchTree.insert(572); binarySearchTree.insert(12);
-binarySearchTree.insert(132); binarySearchTree.insert(132); //duplicate on purpose
+binarySearchTree.insert(132); binarySearchTree.insert(132); //duplicate on purpose to see behaviour
 
 console.log(`in-order traverse: ${binarySearchTree.inOrder()}
 post-order traverse: ${binarySearchTree.postOrder()}
 pre-order traverse: ${binarySearchTree.preOrder()}
 search existing value: ${binarySearchTree.search(12)}
-search non-existing value: ${binarySearchTree.search(9999)}`
+search non-existing value: ${binarySearchTree.search(9999)}
+is Binary Search Tree: ${validBinarySearchTree(binarySearchTree.root)}`
 );
 
 
