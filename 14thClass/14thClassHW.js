@@ -510,68 +510,23 @@ class Graph {
         return result;
     }
 
-    // shortestPath(vertex1, vertex2) {
-    //     const visited = new Set([vertex1])
-    //     const queue = [[vertex1, 0]]
+    shortestPath(vertex1, vertex2) {
+        const visited = new Set([vertex1])
+        const queue = [[vertex1, 0]]
 
-    //     while (queue.length > 0) {
-    //         const [node, distance] = queue.shift()
-
-    //         if (node === vertex2) return distance;
-
-    //         for (let neighbor of this.adjacencyList[node]) {
-    //             if (!visited.has(neighbor)) {
-    //                 visited.add(neighbor)
-    //                 queue.push([neighbor, distance + 1])
-    //             }
-    //         }
-    //     }
-    //     return -1
-    // }
-
-    shortestPathDijkstra(start, end) {
-        const distances = {};
-        const previous = {};
-        const queue = [];
-
-        // Enqueue function to add vertices to the queue with their priority (distance)
-        const enqueue = (vertex, priority) => {
-            queue.push({ vertex, priority });
-            queue.sort((a, b) => a.priority - b.priority); // Sort the queue by priority
-        };
-
-        // Initialize distances and queue
-        for (let vertex in this.adjacencyList) {
-            distances[vertex] = vertex === start ? 0 : Infinity;
-            previous[vertex] = null;
-            enqueue(vertex, distances[vertex]);
-        }
-
-        // Dijkstra's algorithm
         while (queue.length > 0) {
-            const { vertex } = queue.shift();
+            const [node, distance] = queue.shift()
 
-            if (vertex === end) {
-                const path = [];
-                let current = end;
-                while (current !== null) {
-                    path.unshift(current);
-                    current = previous[current];
-                }
-                return path;
-            }
+            if (node === vertex2) return distance;
 
-            for (let neighbor of this.adjacencyList[vertex]) {
-                const weight = 1; // Assuming unweighted graph
-                const newDistance = distances[vertex] + weight;
-                if (newDistance < distances[neighbor]) {
-                    distances[neighbor] = newDistance;
-                    previous[neighbor] = vertex;
-                    enqueue(neighbor, newDistance);
+            for (let neighbor of this.adjacencyList[node]) {
+                if (!visited.has(neighbor)) {
+                    visited.add(neighbor)
+                    queue.push([neighbor, distance + 1])
                 }
             }
         }
-        return null; // No path found
+        return -1
     }
 }
 
@@ -583,8 +538,8 @@ class Graph {
 // console.log(`DFS starting from C: ${graph.depthFirstSearch("C")}`);
 // console.log(`BFS starting from C: ${graph.breadthFirstSearch("C")}`);
 
-// console.log(`shortest path from A to E: ${graph.shortestPathDijkstra("A", "E")}`);
-// console.log(`shortest path from A to non-existing Z": ${graph.shortestPathDijkstra("A", "Z")}`);
+// console.log(`shortest path from A to E: ${graph.shortestPath("A", "E")}`);
+// console.log(`shortest path from A to non-existing Z": ${graph.shortestPath("A", "Z")}`);
 
 // console.log(`
 // **************
