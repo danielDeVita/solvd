@@ -406,28 +406,212 @@ class BinarySearchTree {
 function validBinarySearchTree(node, min = null, max = null) {
     if (!node) return true;
     if ((min !== null && node.value <= min) || (max !== null && node.value >= max)) return false;
-    return (
-        validBinarySearchTree(node.left, min, node) &&
-        validBinarySearchTree(node.right, node, max)
-    );
+    return (validBinarySearchTree(node.left, min, node) && validBinarySearchTree(node.right, node, max));
 }
 
-const binarySearchTree = new BinarySearchTree()
+// const binarySearchTree = new BinarySearchTree()
 
-binarySearchTree.insert(1134); binarySearchTree.insert(665); binarySearchTree.insert(742);
-binarySearchTree.insert(271); binarySearchTree.insert(794); binarySearchTree.insert(931);
-binarySearchTree.insert(967); binarySearchTree.insert(371); binarySearchTree.insert(987);
-binarySearchTree.insert(530); binarySearchTree.insert(572); binarySearchTree.insert(12);
-binarySearchTree.insert(132); binarySearchTree.insert(132); //duplicate on purpose to see behaviour
+// binarySearchTree.insert(1134); binarySearchTree.insert(665); binarySearchTree.insert(742);
+// binarySearchTree.insert(271); binarySearchTree.insert(794); binarySearchTree.insert(931);
+// binarySearchTree.insert(967); binarySearchTree.insert(371); binarySearchTree.insert(987);
+// binarySearchTree.insert(530); binarySearchTree.insert(572); binarySearchTree.insert(12);
+// binarySearchTree.insert(132); binarySearchTree.insert(132); //duplicate on purpose to see behaviour
 
-console.log(`in-order traverse: ${binarySearchTree.inOrder()}
-post-order traverse: ${binarySearchTree.postOrder()}
-pre-order traverse: ${binarySearchTree.preOrder()}
-search existing value: ${binarySearchTree.search(12)}
-search non-existing value: ${binarySearchTree.search(9999)}
-is Binary Search Tree: ${validBinarySearchTree(binarySearchTree.root)}`
-);
+// console.log(`in-order traverse: ${binarySearchTree.inOrder()}
+// post-order traverse: ${binarySearchTree.postOrder()}
+// pre-order traverse: ${binarySearchTree.preOrder()}
+// search existing value: ${binarySearchTree.search(12)}
+// search non-existing value: ${binarySearchTree.search(9999)}
+// is Binary Search Tree: ${validBinarySearchTree(binarySearchTree.root)}`);
 
+class Graph {
+    constructor() {
+        this.adjacencyList = {}
+    }
 
+    addVertex(vertex) {
+        if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = new Set()
+    }
 
+    addEdge(vertex1, vertex2) {
+        if (!this.adjacencyList[vertex1]) this.addVertex(vertex1)
 
+        if (!this.adjacencyList[vertex2]) this.addVertex(vertex2)
+
+        this.adjacencyList[vertex1].add(vertex2)
+        this.adjacencyList[vertex2].add(vertex1)
+    }
+
+    display() {
+        for (let vertex in this.adjacencyList) {
+            console.log(vertex + " -> " + [...this.adjacencyList[vertex]])
+        }
+    }
+
+    removeVertex(vertex) {
+        if (!this.adjacencyList[vertex]) return
+
+        for (let adjacentVertex of this.adjacencyList[vertex]) {
+            this.removeEdge(vertex, adjacentVertex)
+        }
+        delete this.adjacencyList[vertex]
+    }
+
+    hasEdge(vertex1, vertex2) {
+        return this.adjacencyList[vertex1].has(vertex2) && this.adjacencyList[vertex2].has(vertex1)
+    }
+
+    removeEdge(vertex1, vertex2) {
+        this.adjacencyList[vertex1].delete(vertex2)
+        this.adjacencyList[vertex2].delete(vertex1)
+    }
+
+    depthFirstSearch(startVertex) {
+        const visited = {};
+        const result = [];
+
+        const dfsTraversal = (vertex) => {
+            //if there is no vertex, return since there is nothing to traverse (breakcase for recursion)
+            if (!vertex) return;
+            //add property "vertex" with value 'true' to object visited
+            visited[vertex] = true;
+            //push visited vertex to auxiliary array
+            result.push(vertex);
+            //iterate every property in adjacencyList at the given vertex
+            for (const neighbor of this.adjacencyList[vertex]) {
+                //if it doesn't show up in visited object, we keep invoking helper function
+                if (!visited[neighbor]) dfsTraversal(neighbor);
+            }
+        };
+        dfsTraversal(startVertex);
+        return result;
+    }
+
+    breadthFirstSearch(startVertex) {
+        const visited = {};
+        const result = [];
+        const queue = [startVertex];
+        //start by marking the first vertex as visited in visited object
+        visited[startVertex] = true;
+        //while queue has elements, we iterate
+        while (queue.length) {
+            //we remove first element of queue array and push it to result array
+            const vertex = queue.shift();
+            result.push(vertex);
+            //we loop every vertex in main adjacencyList, if that vertex doesn't show up in visited object
+            //we add it and mark it as "visited", then push that vertex to queue auxiliary array variable
+            for (const neighbor of this.adjacencyList[vertex]) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    queue.push(neighbor);
+                }
+            }
+        }
+        return result;
+    }
+
+    // shortestPath(vertex1, vertex2) {
+    //     const visited = new Set([vertex1])
+    //     const queue = [[vertex1, 0]]
+
+    //     while (queue.length > 0) {
+    //         const [node, distance] = queue.shift()
+
+    //         if (node === vertex2) return distance;
+
+    //         for (let neighbor of this.adjacencyList[node]) {
+    //             if (!visited.has(neighbor)) {
+    //                 visited.add(neighbor)
+    //                 queue.push([neighbor, distance + 1])
+    //             }
+    //         }
+    //     }
+    //     return -1
+    // }
+
+    shortestPathDijkstra(start, end) {
+        const distances = {};
+        const previous = {};
+        const queue = [];
+
+        // Enqueue function to add vertices to the queue with their priority (distance)
+        const enqueue = (vertex, priority) => {
+            queue.push({ vertex, priority });
+            queue.sort((a, b) => a.priority - b.priority); // Sort the queue by priority
+        };
+
+        // Initialize distances and queue
+        for (let vertex in this.adjacencyList) {
+            distances[vertex] = vertex === start ? 0 : Infinity;
+            previous[vertex] = null;
+            enqueue(vertex, distances[vertex]);
+        }
+
+        // Dijkstra's algorithm
+        while (queue.length > 0) {
+            const { vertex } = queue.shift();
+
+            if (vertex === end) {
+                const path = [];
+                let current = end;
+                while (current !== null) {
+                    path.unshift(current);
+                    current = previous[current];
+                }
+                return path;
+            }
+
+            for (let neighbor of this.adjacencyList[vertex]) {
+                const weight = 1; // Assuming unweighted graph
+                const newDistance = distances[vertex] + weight;
+                if (newDistance < distances[neighbor]) {
+                    distances[neighbor] = newDistance;
+                    previous[neighbor] = vertex;
+                    enqueue(neighbor, newDistance);
+                }
+            }
+        }
+        return null; // No path found
+    }
+}
+
+// const graph = new Graph()
+// graph.addVertex("A"); graph.addVertex("B"); graph.addVertex("C"); graph.addVertex("D"); graph.addVertex("E")
+
+// graph.addEdge("A", "B"); graph.addEdge("B", "C"); graph.addEdge("C", "D"); graph.addEdge("D", "E")
+
+// console.log(`DFS starting from C: ${graph.depthFirstSearch("C")}`);
+// console.log(`BFS starting from C: ${graph.breadthFirstSearch("C")}`);
+
+// console.log(`shortest path from A to E: ${graph.shortestPathDijkstra("A", "E")}`);
+// console.log(`shortest path from A to non-existing Z": ${graph.shortestPathDijkstra("A", "Z")}`);
+
+// console.log(`
+// **************
+// Full Graph:
+// `);
+// graph.display()
+// console.log(`
+// **************
+// `);
+
+// console.log(`Do A and B have edges?: ${graph.hasEdge("A", "B")}`)
+// console.log(`Do A and C have edges?: ${graph.hasEdge("A", "C")}`)
+
+// graph.removeEdge("A", "B")
+
+// console.log(`
+// **************
+
+// Full Graph (after removing edge from A to B):
+// `);
+// graph.display()
+// console.log(`
+// **************
+// `);
+
+// graph.removeVertex("B")
+
+// console.log(`Full Graph (after removing vertex B):
+// `);
+// graph.display()
