@@ -24,19 +24,13 @@ class CustomHashTable {
         if (this.storage[index] === undefined) this.storage[index] = [[key, value]];
         //if it's not undefined it means bucket already has data
         else {
-            //flag to keep track of inserted key:value pairs
-            let inserted = false;
             //iterate through each key:value pair in bucket
             for (let i = 0; i < this.storage[index].length; i++) {
                 //check if key exists, if it does we update it with the new value (duplicated data)
                 if (this.storage[index][i][0] === key) {
                     this.storage[index][i][1] = value;
-                    //update flag
-                    inserted = true;
                 }
             }
-            //if it doesn't exits we set inserted to false and push it to storage
-            if (inserted === false) this.storage[index].push([key, value]);
         }
     }
 
@@ -68,16 +62,16 @@ class CustomHashTable {
     }
 }
 
-// const customHashTable = new CustomHashTable();
+const customHashTable = new CustomHashTable();
 
-// console.log(customHashTable.hash("key1")); //378
+console.log(customHashTable.hash("key1")); //378
 
-// customHashTable.insert("key1", "value1");
-// customHashTable.insert("key2", "value2");
-// console.table(customHashTable.print())
+customHashTable.insert("key1", "value1");
+customHashTable.insert("key2", "value2");
+console.table(customHashTable.print())
 
-// console.log(customHashTable.get("key1")); //value1
-// console.log(customHashTable.get("FA478")); //Key not existing in Hash Table
+console.log(customHashTable.get("key1")); //value1
+console.log(customHashTable.get("FA478")); //Key not existing in Hash Table
 
-// customHashTable.insert("key2", "otherValue");
-// console.table(customHashTable.print()) 
+customHashTable.insert("key2", "otherValue");
+console.table(customHashTable.print()) 
