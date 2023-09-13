@@ -26,7 +26,7 @@ class CustomHashTable {
         else {
             //iterate through each key:value pair in bucket
             for (let i = 0; i < this.storage[index].length; i++) {
-                //check if key exists, if it does we update it with the new value (duplicated data)
+                //check if key exists, if it does we update it with the new value
                 if (this.storage[index][i][0] === key) {
                     this.storage[index][i][1] = value;
                 }
