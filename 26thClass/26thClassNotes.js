@@ -130,4 +130,213 @@ Types of relations:
 2) One-to-Many
 3) Many-to-Many
 
+*********************************************
+
+Operators:
+
+- Arithmetics
++
+-
+*
+/
+%
+
+- Comparisson
+=
+!= (same as <>)
+<
+>
+<=
+>=
+!<
+!>
+
+- Logical
+ALL
+AND
+ANY
+BETWEEN
+EXISTS
+IN
+LIKE
+NOT
+OR
+IS NULL
+UNIQUE
+
+- Mathematical
+AVG
+SUM
+MIN
+MAX
+COUNT
+ROUND
+TRUNCATE
+CEILING
+FLOOR
+POWER
+SQRT
+RAND
+
+- String
+CONCAT
+LENGTH
+TRIM
+SUBSTRING
+REPLACE
+LOWER
+UPPER
+
+- Dates
+CURRENT_TIMESTAMP
+CURDDATE / CURRENT_DATE
+CURTIME / CURRENT_TIME
+DAYOFMONTH
+DAYOFWEEK
+DAYOFYEAR
+MONTH
+YEAR
+LAST_DAY
+HOUR
+MINUTE
+SECOND
+DATE_ADD
+DATE_SUB
+DATEDIFF
+TIME_TO_SEC
+
+*********************************************
+
+Definition of expression:
+An expression is a combination of one or more values, constants, variables, 
+operators, functions, etc., which are combined using logical operators
+
+SELECT *
+FROM table
+WHERE [condition|expression]
+        status = 'active'
+
+SELECT (10+5) as add
+
+SELECT COUNT(*) AS records FROM users
+
+CREATE DATABASE IF NOT EXIST db;
+
+SHOW DATABASES;
+
+DROP DATABASE IF EXISTS db;
+
+USE testDb;
+... operations
+
+USE stagingDb;
+
+CREATE TABLE tableNme(
+    name VARCHAR(50) NOT NULL
+    age INT
+    status VARCHAR(10)
+    PRIMARY KEY (id)
+)
+
+DESC tableName;
+
+DROP table tableName;
+
+INSERT INTO tableName(
+    col1, col2, col3,... coln,
+    VALUES (val1, val2, ... valn);
+)
+INSERT INTO tableName[columnList]
+SELECT (col1, col2, ...coln)
+FROM anotherTable
+[WHERE condition]
+
+SELECT col1, col2, ...coln (*)
+FROM tableName
+WHERE condition
+
+UPDATE tableName
+SET col1=value1, col2=value2, ...coln=valuen
+[WHERE condition]
+
+DELETE FROM tableName
+[WHERE condition]
+
+*********************************************
+
+LIKE:
+%searchTerm% - Matches any string that contains searchTerm.
+REGEX:
+/pattern/i - Matches the pattern with case insensitivity.
+
+*********************************************
+
+(in postgress)
+TOP and LIMIT:
+SELECT TOP 3 * from users
+
+SELECT * FROM users
+LIMIT 15, 15
+
+*********************************************
+
+ORDERBY GROUPBY
+SELECT col1, col2...
+FROM tableName
+[WHERE condition]
+ORDERBY col1, col2 [ASC | DESC]
+
+GROUP BY col1, col2
+
+*********************************************
+
+JOINS (unite tables):
+
+- INNER JOIN - only returns records where there is a match in both tables
+
+SELECT columns
+FROM tableA
+INNER JOIN tableB
+ON A.key = B.key
+
+
+- LEFT OUTER JOIN - return all records from the left table, and the matched records from the right table
+
+SELECT columns
+FROM tableA
+LEFT JOIN tableB
+ON A.key = B.key
+
+(optional to left behing colums of B)
+WHERE B.key IS NULL 
+
+
+- RIGHT OUTER JOIN - return all records from the right table, and the matched records from the left table
+
+SELECT colums
+FROM tableA
+RIGHT JOIN tableB
+ON A.key = B.key
+
+(optional to left behing colums of A)
+WHERE A.key IS NULL 
+
+
+- FULL OUTER JOIN - return all records when there is a match in either of the two tables
+
+SELECT columns
+FROM tableA
+FULL OUTER JOIN tableB
+ON A.key = B.key
+
+(optional to left behing colums of A or B)
+WHERE A.key IS NULL OR B.key IS NULL
+
+
+- CROSS JOIN - create new rows for each combination of values found between the two tables
+
+SELECT colums
+FROM tableA
+CROSS JOIN tableB
+
 */
