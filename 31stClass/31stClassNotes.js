@@ -123,8 +123,4 @@ start planning==>
     (end of loop)
     7)release
 
-5)Agile Software Development Methodology:
-- iterative approach where the team works on a short time frame
-- focus on delivering working software at end of iteration
-
 */
