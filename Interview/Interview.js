@@ -230,7 +230,7 @@
         return 5 + 3;
         });
 
-        console.log(lazyAddition()); // Output: Performing expensive addition... 8
+        console.log(lazyAddition()); // Output: Performing expensive addition... 
         console.log(lazyAddition()); // Output: 8 (result is already computed, no re-computation)
 
 7) What is carrying?
@@ -244,9 +244,8 @@
                 return a + b;
             };
         }
-        const add5 = curriedAdd(5); // Creates a new function that adds 5 to a value
+        const add2 = curriedAdd(2); // Creates a new function that adds 2 to a value
         const result1 = add2(3);    // Adds 2 to 3, resulting in 5
-        const result2 = add5(3);    // Adds 5 to 3, resulting in 8
 
 8) What is function composition?
         Combination or chaining multiple operations to perform complex tasks in an efficient way without creating intermediate variables.
