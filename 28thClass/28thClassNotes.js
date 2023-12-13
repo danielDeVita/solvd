@@ -25,6 +25,8 @@ Creational Design Patterns =
 
 ///////////////////////////////////
 
+STRUCTURAL PATTERN
+
 Adaptor Design Pattern =
 Convert interface of an existing class into another interface clients expect.
 Lets classes work together that couldn’t otherwise because of differences in their interfaces.
