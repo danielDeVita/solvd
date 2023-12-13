@@ -359,8 +359,11 @@
 
 2) How would you describe the Big O complexity of common sorting algorithms like QuickSort, MergeSort, and BubbleSort?
     QuickSort: generally fast. On average, it divides the data into smaller parts and sorts them independently
+    ()
     MergeSort:  It divides the data into halves, recursively sorts each half, and then merges them back together
+    ()
     BubbleSort: Simple but inefficient algorithm; compares and swaps adjacent elements until the entire array is sorted
+    (iterates over every element every loop)
 
 3) Which other notations do you know?
     Little O Notation, Omega Notation, Theta Notation
@@ -382,7 +385,7 @@
 
 4) What are Map and Set?
     -Map:
-    Key value pairs, Keys must be unique
+    Key value pairs, Keys must be unique and could be any type not just strings
     -Set:
     Unordered set of values, no duplicates allowed
 
@@ -521,7 +524,7 @@
     get, post, put, patch, delete, head, options
 
 4. What application levels do you know?
-    level 3: HATEOAS (ie: Hypermedia as Engine of application state)
+    level 3: HATEOAS (ie: Hypermedia as the Engine of application state)
     level 2: verb logic and code on done
     level 1: we use different paths (ie: /:id changes )
     level 0: we use some protocol and a format of data (ie: JSON and GET, no HARD logic)
@@ -690,7 +693,7 @@
     A DB that uses objects to store values
 
 15) What are key-value DBs used for?
-    For anything that we need fast acces and where data types are not stric
+    For anything that we need fast acces and where data types are not strict
 
 16) What is ORM?
     Translator for a relational DB in JavaScript
